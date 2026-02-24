@@ -2,8 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uber Copypaste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Título y configuración para pantalla de inicio -->
+    <title>Mensajes Uber</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mensajes Uber">
+    <meta name="application-name" content="Mensajes Uber">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Ícono SVG embebido (un auto negro) para que no necesites subir imágenes extra -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000'/><text y='.75em' x='.1em' font-size='80'>🚕</text></svg>">
+
     <style>
         :root {
             --uber-black: #000000;
@@ -54,6 +66,8 @@
             background: #fff;
             box-sizing: border-box;
             outline: none;
+            -webkit-appearance: none; /* Mejora el estilo del select en iOS */
+            appearance: none;
         }
         select:focus {
             border-color: var(--uber-black);
@@ -113,7 +127,7 @@
 <body>
 
 <div class="app-container">
-    <h2>📍 Indicaciones Uber</h2>
+    <h2>📍 Mensajes Uber</h2>
 
     <div class="form-group">
         <label for="hora">Horario (Auto-detectado)</label>
@@ -147,22 +161,32 @@
 </div>
 
 <script>
-    // Textos base
-    const txtDomi = "Hola, tiene espacio en el maletero? llevamos un coche qué se pliega y una bebe con su silla, la instalación solo demora unos segundos.";
-    const txtAbajo = "Hola. Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol, o si no, por atrás en calle Tobalaba, donde hay un portón para entrar por San Jorge.";
-    const txtArriba = "Hola. Los pasajes por Diego Portales están cerrados. Por atrás, en calle Tobalaba, hay un portón para entrar por San Jorge. Si no, también se puede entrar desde Av. La Florida por calle Valle del Sol.";
-    const txtTarde = "Hola. Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por atrás, en calle Tobalaba, hay un portón que a veces, a esta hora, también está cerrado).";
-    const txtNoche = "Hola. Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por Tobalaba, esta hora, debería estar cerrado). Hay que ir por escarcha y luego por la entrada de San Jorge.";
+    // Textos base (sin el "Hola" inicial para no repetirlo)
+    const saludo = "Hola. ";
+    const txtDomi = "¿Tiene espacio en el maletero? Llevamos un coche que se pliega y una bebé con su silla, la instalación solo demora unos segundos.";
+    const txtAbajo = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol, o si no, por atrás en calle Tobalaba, donde hay un portón para entrar por San Jorge.";
+    const txtArriba = "Los pasajes por Diego Portales están cerrados. Por atrás, en calle Tobalaba, hay un portón para entrar por San Jorge. Si no, también se puede entrar desde Av. La Florida por calle Valle del Sol.";
+    const txtTarde = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por atrás, en calle Tobalaba, hay un portón que a veces, a esta hora, también está cerrado).";
+    const txtNoche = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por Tobalaba, a esta hora, debería estar cerrado). Hay que ir por Escarcha y luego por la entrada de San Jorge.";
 
     function autoDetectarHora() {
-        const horaActual = new Date().getHours();
+        const ahora = new Date();
+        const hora = ahora.getHours();
+        const minutos = ahora.getMinutes();
         const selectHora = document.getElementById('hora');
         
-        if (horaActual >= 23 || horaActual < 6) { 
+        // Convertimos la hora actual a minutos totales del día para comparar fácil
+        const totalMinutos = (hora * 60) + minutos;
+        
+        // 21:50 = 1310 minutos | 22:50 = 1370 minutos | 06:00 = 360 minutos
+        if (totalMinutos >= 1370 || totalMinutos < 360) { 
+            // Desde las 22:50 en adelante (y madrugada)
             selectHora.value = 'noche';
-        } else if (horaActual >= 22) {
+        } else if (totalMinutos >= 1310) {
+            // Entre las 21:50 y las 22:49
             selectHora.value = 'tarde';
         } else {
+            // Antes de las 21:50
             selectHora.value = 'normal';
         }
     }
@@ -173,7 +197,8 @@
         const conDomi = document.getElementById('domi').checked;
         const origenContainer = document.getElementById('origen-container');
         
-        let mensajeFinal = "";
+        // Iniciamos siempre con el saludo
+        let mensajeFinal = saludo;
 
         if (conDomi) {
             mensajeFinal += txtDomi + "\n\n";
@@ -217,7 +242,6 @@
             console.error('Error al copiar el texto: ', err);
         }
         
-        // Deselecciona el texto tras copiar
         window.getSelection().removeAllRanges();
     }
 
