@@ -38,7 +38,7 @@ export default function Login() {
   if (!loading && user) return <Navigate to="/" replace />
 
   return (
-    <main className="app-main">
+    <div className="login-page">
       <section className="landing">
         <div className="hero-badge">🚕</div>
         <h1>Que tu Uber te encuentre a la primera</h1>
@@ -88,7 +88,7 @@ export default function Login() {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   )
 }
 

@@ -305,6 +305,17 @@ input[type='checkbox'] {
 }
 
 /* ---- Landing / login ---- */
+.login-page {
+  min-height: 100svh;
+  padding: 30px 20px 44px;
+  background:
+    radial-gradient(125% 85% at 50% -10%, #fff0d8 0%, rgba(255, 240, 216, 0) 55%),
+    radial-gradient(105% 70% at 110% 10%, #ffdfe9 0%, rgba(255, 223, 233, 0) 55%),
+    radial-gradient(105% 70% at -10% 24%, #dfeaff 0%, rgba(223, 234, 255, 0) 55%),
+    radial-gradient(120% 90% at 50% 110%, #eafbf0 0%, rgba(234, 251, 240, 0) 50%),
+    linear-gradient(180deg, #ffffff 0%, #fafaff 100%);
+}
+
 .landing {
   text-align: center;
   padding: 4px 0 0;
@@ -414,6 +425,8 @@ input[type='checkbox'] {
   border-radius: 16px;
   padding: 16px 14px;
   text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 6px 16px rgba(40, 30, 60, 0.06);
 }
 
 .feature-badge {
