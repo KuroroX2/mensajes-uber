@@ -4,23 +4,31 @@ import { useAuth } from '../context/authStore'
 const FEATURES = [
   {
     icon: '📝',
-    title: 'Tus plantillas, a tu medida',
-    desc: 'Define una vez tus direcciones, condiciones y textos. La app arma el mensaje por ti.',
+    title: 'Tus plantillas',
+    desc: 'Define tus direcciones, condiciones y textos una vez.',
+    cardBg: '#eef4ff',
+    badgeBg: '#d8e6ff',
   },
   {
     icon: '⏰',
-    title: 'Se adapta a la hora',
-    desc: 'Detecta el momento del día y elige el mensaje correcto (de día, de noche, etc.).',
+    title: 'Según la hora',
+    desc: 'El mensaje correcto para cada momento del día.',
+    cardBg: '#fff6e6',
+    badgeBg: '#ffe7bd',
   },
   {
     icon: '⚡',
-    title: 'Listo en un toque',
-    desc: 'Genera el mensaje y cópialo al instante para pegarlo en el chat del conductor.',
+    title: 'En un toque',
+    desc: 'Genera y copia el mensaje al instante.',
+    cardBg: '#eafaf0',
+    badgeBg: '#caf1d8',
   },
   {
     icon: '☁️',
-    title: 'Te sigue a todos lados',
-    desc: 'Tus plantillas se guardan en la nube: entra desde el móvil o el computador.',
+    title: 'En la nube',
+    desc: 'Tus plantillas, en el móvil y el computador.',
+    cardBg: '#f5efff',
+    badgeBg: '#e5d8ff',
   },
 ]
 
@@ -30,41 +38,14 @@ export default function Login() {
   if (!loading && user) return <Navigate to="/" replace />
 
   return (
-    <>
-      <header className="app-header">
-        <h1>🚕 Mensajes Uber</h1>
-      </header>
-
-      <main className="app-main">
-        <section className="landing">
-          <div className="hero-emoji">📍🚕</div>
-          <h1>Que tu Uber te encuentre a la primera</h1>
-          <p className="tagline">
-            Deja de escribir las mismas indicaciones cada vez. Crea tu mensaje perfecto una
-            vez y envíalo en segundos.
-          </p>
-
-          <div className="chat">
-            <p className="chat-label">Así se ve tu mensaje 👇</p>
-            <div className="bubble">
-              Hola. Los pasajes de mi calle están cerrados; entra por la calle de atrás, hay un
-              portón abierto junto al número 12. ¡Gracias! 🙌
-              <span className="bubble-meta">9:41 ✓✓</span>
-            </div>
-          </div>
-        </section>
-
-        <div className="features">
-          {FEATURES.map((f) => (
-            <div className="feature" key={f.title}>
-              <span className="feature-icon">{f.icon}</span>
-              <div>
-                <p className="feature-title">{f.title}</p>
-                <p className="feature-desc">{f.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+    <main className="app-main">
+      <section className="landing">
+        <div className="hero-badge">🚕</div>
+        <h1>Que tu Uber te encuentre a la primera</h1>
+        <p className="tagline">
+          Deja de escribir las mismas indicaciones cada vez. Crea tu mensaje perfecto una vez
+          y envíalo en segundos.
+        </p>
 
         {!isConfigured ? (
           <div className="card" style={{ textAlign: 'left' }}>
@@ -81,13 +62,33 @@ export default function Login() {
               <GoogleIcon />
               Entrar con Google
             </button>
-            <p className="cta-note">
-              Gratis · Sin contraseñas · Sin spam. Solo entras con tu cuenta de Google. 🔒
-            </p>
+            <p className="cta-note">Gratis · Sin contraseñas · Sin spam 🔒</p>
           </>
         )}
-      </main>
-    </>
+
+        <div className="chat">
+          <p className="chat-label">Así se ve tu mensaje 👇</p>
+          <div className="bubble">
+            Hola. Los pasajes de mi calle están cerrados; entra por la calle de atrás, hay un
+            portón abierto junto al número 12. ¡Gracias! 🙌
+            <span className="bubble-meta">9:41 ✓✓</span>
+          </div>
+        </div>
+      </section>
+
+      <p className="section-eyebrow">Por qué te va a gustar</p>
+      <div className="features-grid">
+        {FEATURES.map((f) => (
+          <div className="feature-card" key={f.title} style={{ background: f.cardBg }}>
+            <div className="feature-badge" style={{ background: f.badgeBg }}>
+              {f.icon}
+            </div>
+            <p className="feature-title">{f.title}</p>
+            <p className="feature-desc">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </main>
   )
 }
 
