@@ -1,0 +1,305 @@
+:root {
+  --black: #000000;
+  --gray: #eeeeee;
+  --gray-2: #f6f6f6;
+  --text: #333333;
+  --muted: #777777;
+  --border: #dddddd;
+  --green: #138a36;
+  --red: #c0392b;
+  --radius: 10px;
+  --sans: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--gray-2);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---- Layout ---- */
+.app-shell {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100svh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray);
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.app-header h1 {
+  font-size: 18px;
+  margin: 0;
+  color: var(--black);
+}
+
+.app-main {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+/* ---- Form elements ---- */
+.field {
+  margin-bottom: 18px;
+}
+
+label.field-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='number'],
+select,
+textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  background: #fff;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: var(--black);
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.5;
+  background: #fafafa;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--gray);
+  padding: 13px 14px;
+  border-radius: 8px;
+}
+
+.toggle-row label {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--black);
+  flex-shrink: 0;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  width: 100%;
+  background: var(--black);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.btn:active {
+  background: #333;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+}
+
+.btn-outline {
+  background: #fff;
+  color: var(--black);
+  border: 1px solid var(--black);
+}
+
+.btn-outline:active {
+  background: var(--gray);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--black);
+  border: none;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  width: auto;
+}
+
+.btn-danger {
+  background: #fff;
+  color: var(--red);
+  border: 1px solid var(--red);
+}
+
+.btn-sm {
+  width: auto;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---- Toast ---- */
+.toast {
+  text-align: center;
+  color: var(--green);
+  font-weight: bold;
+  margin-top: 14px;
+  font-size: 14px;
+  min-height: 18px;
+}
+
+/* ---- Cards / lists ---- */
+.card {
+  border: 1px solid var(--gray);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--black);
+  margin: 0 0 4px;
+}
+
+.card-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  margin: 24px 0 10px;
+  font-weight: bold;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--gray);
+  margin: 20px 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+
+.inline-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.row-2 {
+  display: flex;
+  gap: 8px;
+}
+
+.row-2 > * {
+  flex: 1;
+}
+
+.chip {
+  display: inline-block;
+  background: var(--gray);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 12px;
+  margin: 2px 4px 2px 0;
+}
+
+.back-link {
+  text-decoration: none;
+  font-size: 22px;
+  line-height: 1;
+}

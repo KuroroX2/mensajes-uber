@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Título y configuración para pantalla de inicio -->
+    <title>Mensajes Uber</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mensajes Uber">
+    <meta name="application-name" content="Mensajes Uber">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Ícono SVG embebido (un auto negro) para que no necesites subir imágenes extra -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚕</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23000'/><text y='.75em' x='.1em' font-size='80'>🚕</text></svg>">
+
+    <style>
+        :root {
+            --uber-black: #000000;
+            --uber-gray: #EEEEEE;
+            --uber-text: #333333;
+        }
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f6f6f6;
+            margin: 0;
+            padding: 20px;
+            color: var(--uber-text);
+            display: flex;
+            justify-content: center;
+        }
+        .app-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        h2 {
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 22px;
+            color: var(--uber-black);
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            transition: opacity 0.3s ease;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #fff;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-appearance: none; /* Mejora el estilo del select en iOS */
+            appearance: none;
+        }
+        select:focus {
+            border-color: var(--uber-black);
+        }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--uber-gray);
+            padding: 14px;
+            border-radius: 8px;
+        }
+        .toggle-container input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--uber-black);
+        }
+        textarea {
+            width: 100%;
+            height: 160px;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: none;
+            box-sizing: border-box;
+            background: #fafafa;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            background-color: var(--uber-black);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        button:active {
+            background-color: #333;
+        }
+        .toast {
+            display: none;
+            text-align: center;
+            color: #138a36;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <h2>📍 Mensajes Uber</h2>
+
+    <div class="form-group">
+        <label for="hora">Horario (Auto-detectado)</label>
+        <select id="hora" onchange="generarMensaje()">
+            <option value="normal">Antes de las 22:00</option>
+            <option value="tarde">Entre 22:00 y 23:00</option>
+            <option value="noche">Después de las 23:00</option>
+        </select>
+    </div>
+
+    <div class="form-group" id="origen-container">
+        <label for="origen">¿Por dónde viene el conductor?</label>
+        <select id="origen" onchange="generarMensaje()">
+            <option value="abajo">Desde abajo (Av. La Florida)</option>
+            <option value="arriba">Desde arriba (Tobalaba)</option>
+        </select>
+    </div>
+
+    <div class="form-group toggle-container">
+        <label for="domi" style="margin: 0; font-size: 16px;">🍼 Viajamos con la Domi (en coche)</label>
+        <input type="checkbox" id="domi" onchange="generarMensaje()">
+    </div>
+
+    <div class="form-group">
+        <label for="resultado">Mensaje listo para enviar:</label>
+        <textarea id="resultado" readonly></textarea>
+    </div>
+
+    <button onclick="copiarTexto()">Copiar Mensaje</button>
+    <div class="toast" id="toast">¡Copiado al portapapeles! ✓</div>
+</div>
+
+<script>
+    // Textos base (sin el "Hola" inicial para no repetirlo)
+    const saludo = "Hola. ";
+    const txtDomi = "¿Tiene espacio en el maletero? Llevamos un coche que se pliega y una bebé con su silla, la instalación solo demora unos segundos.";
+    const txtAbajo = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol, o si no, por atrás en calle Tobalaba, donde hay un portón para entrar por San Jorge.";
+    const txtArriba = "Los pasajes por Diego Portales están cerrados. Por atrás, en calle Tobalaba, hay un portón para entrar por San Jorge. Si no, también se puede entrar desde Av. La Florida por calle Valle del Sol.";
+    const txtTarde = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por atrás, en calle Tobalaba, hay un portón que a veces, a esta hora, también está cerrado).";
+    const txtNoche = "Los pasajes por Diego Portales están cerrados. Hay que entrar desde Av. La Florida por calle Valle del Sol. (Por Tobalaba, a esta hora, debería estar cerrado). Hay que ir por Escarcha y luego por la entrada de San Jorge.";
+
+    function autoDetectarHora() {
+        const ahora = new Date();
+        const hora = ahora.getHours();
+        const minutos = ahora.getMinutes();
+        const selectHora = document.getElementById('hora');
+        
+        // Convertimos la hora actual a minutos totales del día para comparar fácil
+        const totalMinutos = (hora * 60) + minutos;
+        
+        // 21:50 = 1310 minutos | 22:50 = 1370 minutos | 06:00 = 360 minutos
+        if (totalMinutos >= 1370 || totalMinutos < 360) { 
+            // Desde las 22:50 en adelante (y madrugada)
+            selectHora.value = 'noche';
+        } else if (totalMinutos >= 1310) {
+            // Entre las 21:50 y las 22:49
+            selectHora.value = 'tarde';
+        } else {
+            // Antes de las 21:50
+            selectHora.value = 'normal';
+        }
+    }
+
+    function generarMensaje() {
+        const hora = document.getElementById('hora').value;
+        const origen = document.getElementById('origen').value;
+        const conDomi = document.getElementById('domi').checked;
+        const origenContainer = document.getElementById('origen-container');
+        
+        // Iniciamos siempre con el saludo
+        let mensajeFinal = saludo;
+
+        if (conDomi) {
+            mensajeFinal += txtDomi + "\n\n";
+        }
+
+        if (hora === 'normal') {
+            origenContainer.style.opacity = '1';
+            origenContainer.style.pointerEvents = 'auto';
+            
+            if (origen === 'abajo') {
+                mensajeFinal += txtAbajo;
+            } else {
+                mensajeFinal += txtArriba;
+            }
+        } else if (hora === 'tarde') {
+            origenContainer.style.opacity = '0.4'; 
+            origenContainer.style.pointerEvents = 'none';
+            mensajeFinal += txtTarde;
+        } else if (hora === 'noche') {
+            origenContainer.style.opacity = '0.4';
+            origenContainer.style.pointerEvents = 'none';
+            mensajeFinal += txtNoche;
+        }
+
+        document.getElementById('resultado').value = mensajeFinal;
+    }
+
+    function copiarTexto() {
+        const textarea = document.getElementById('resultado');
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // Soporte móvil
+        
+        try {
+            document.execCommand('copy');
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        } catch (err) {
+            console.error('Error al copiar el texto: ', err);
+        }
+        
+        window.getSelection().removeAllRanges();
+    }
+
+    window.onload = function() {
+        autoDetectarHora();
+        generarMensaje();
+    };
+</script>
+
+</body>
+</html>
