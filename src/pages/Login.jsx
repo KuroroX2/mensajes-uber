@@ -6,29 +6,25 @@ const FEATURES = [
     icon: '📝',
     title: 'Tus plantillas',
     desc: 'Define tus direcciones, condiciones y textos una vez.',
-    cardBg: '#eef4ff',
-    badgeBg: '#d8e6ff',
+    accent: '#60a5fa',
   },
   {
     icon: '⏰',
     title: 'Según la hora',
     desc: 'El mensaje correcto para cada momento del día.',
-    cardBg: '#fff6e6',
-    badgeBg: '#ffe7bd',
+    accent: '#fbbf24',
   },
   {
     icon: '⚡',
     title: 'En un toque',
     desc: 'Genera y copia el mensaje al instante.',
-    cardBg: '#eafaf0',
-    badgeBg: '#caf1d8',
+    accent: '#34d399',
   },
   {
     icon: '☁️',
     title: 'En la nube',
     desc: 'Tus plantillas, en el móvil y el computador.',
-    cardBg: '#f5efff',
-    badgeBg: '#e5d8ff',
+    accent: '#a78bfa',
   },
 ]
 
@@ -58,7 +54,7 @@ export default function Login() {
           </div>
         ) : (
           <>
-            <button className="btn btn-outline btn-google" onClick={signInWithGoogle}>
+            <button className="btn btn-google" onClick={signInWithGoogle}>
               <GoogleIcon />
               Entrar con Google
             </button>
@@ -79,8 +75,15 @@ export default function Login() {
       <p className="section-eyebrow">Por qué te va a gustar</p>
       <div className="features-grid">
         {FEATURES.map((f) => (
-          <div className="feature-card" key={f.title} style={{ background: f.cardBg }}>
-            <div className="feature-badge" style={{ background: f.badgeBg }}>
+          <div
+            className="feature-card"
+            key={f.title}
+            style={{ borderColor: `${f.accent}33`, boxShadow: `0 10px 32px ${f.accent}1f` }}
+          >
+            <div
+              className="feature-badge"
+              style={{ background: `${f.accent}26`, boxShadow: `0 0 18px ${f.accent}33` }}
+            >
               {f.icon}
             </div>
             <p className="feature-title">{f.title}</p>

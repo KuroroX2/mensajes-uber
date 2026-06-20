@@ -15,7 +15,7 @@ export default defineConfig({
         description: 'Genera mensajes para tu conductor a partir de tus propias plantillas.',
         lang: 'es',
         theme_color: '#000000',
-        background_color: '#ffffff',
+        background_color: '#000000',
         display: 'standalone',
         orientation: 'portrait',
         start_url: '/',
