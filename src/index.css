@@ -303,3 +303,114 @@ input[type='checkbox'] {
   font-size: 22px;
   line-height: 1;
 }
+
+/* ---- Landing / login ---- */
+.landing {
+  text-align: center;
+  padding: 8px 0 8px;
+}
+
+.hero-emoji {
+  font-size: 56px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.landing h1 {
+  font-size: 27px;
+  color: var(--black);
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.landing .tagline {
+  font-size: 16px;
+  color: var(--text);
+  margin: 0 auto;
+  max-width: 320px;
+  line-height: 1.45;
+}
+
+/* chat preview */
+.chat {
+  margin: 22px 0 4px;
+}
+
+.chat-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.bubble {
+  background: #d9fdd3;
+  color: #111;
+  border-radius: 14px 14px 4px 14px;
+  padding: 10px 12px 6px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 300px;
+  margin-left: auto;
+  text-align: left;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.bubble-meta {
+  display: block;
+  text-align: right;
+  font-size: 10px;
+  color: #4a7c59;
+  margin-top: 2px;
+}
+
+/* features */
+.features {
+  text-align: left;
+  margin: 26px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feature {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.feature-icon {
+  font-size: 22px;
+  width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.feature-title {
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--black);
+  margin: 0;
+}
+
+.feature-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 2px 0 0;
+  line-height: 1.4;
+}
+
+.cta-note {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 12px;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
