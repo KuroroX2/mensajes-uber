@@ -36,7 +36,9 @@ export default function Login() {
   return (
     <div className="login-page">
       <section className="landing">
-        <div className="hero-badge">🚕</div>
+        <div className="hero-badge">
+          <PinIcon />
+        </div>
         <h1>Que tu Uber te encuentre a la primera</h1>
         <p className="tagline">
           Deja de escribir las mismas indicaciones cada vez. Crea tu mensaje perfecto una vez
@@ -92,6 +94,19 @@ export default function Login() {
         ))}
       </div>
     </div>
+  )
+}
+
+function PinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2.25c-3.73 0-6.75 3.02-6.75 6.75 0 4.66 6.04 11.62 6.3 11.92a.6.6 0 0 0 .9 0c.26-.3 6.3-7.26 6.3-11.92 0-3.73-3.02-6.75-6.75-6.75Zm0 9.25a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"
+        fill="#ffffff"
+      />
+    </svg>
   )
 }
 
