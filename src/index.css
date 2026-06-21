@@ -475,3 +475,53 @@ input[type='checkbox'] {
   margin: 0;
   line-height: 1.4;
 }
+
+/* ---- Wizard ---- */
+.wizard-progress {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 2px 0 22px;
+}
+
+.wizard-progress span {
+  height: 5px;
+  width: 32px;
+  border-radius: 3px;
+  background: var(--surface-2);
+  transition: background 0.2s;
+}
+
+.wizard-progress span.active {
+  background: var(--white);
+}
+
+.wizard-q {
+  font-size: 21px;
+  color: var(--white);
+  margin: 0 0 6px;
+  letter-spacing: -0.3px;
+}
+
+.wizard-help {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 18px;
+  line-height: 1.45;
+}
+
+.suggest-btn {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 9px 13px;
+  font-size: 13px;
+  margin: 0 6px 8px 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.suggest-btn:active {
+  background: var(--surface);
+  border-color: #5a5a66;
+}

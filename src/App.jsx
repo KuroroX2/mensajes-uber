@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import TemplatesList from './pages/TemplatesList'
 import TemplateEditor from './pages/TemplateEditor'
+import TemplateWizard from './pages/TemplateWizard'
 
 function App() {
   return (
@@ -25,6 +26,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <TemplatesList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/plantillas/asistente"
+            element={
+              <ProtectedRoute>
+                <TemplateWizard />
               </ProtectedRoute>
             }
           />

@@ -90,7 +90,7 @@ export default function Home() {
         {templates.length === 0 ? (
           <div className="empty">
             <p>No tienes plantillas todavía.</p>
-            <Link to="/plantillas/nueva" className="btn btn-sm">
+            <Link to="/plantillas/asistente" className="btn btn-sm">
               Crear mi primera plantilla
             </Link>
           </div>

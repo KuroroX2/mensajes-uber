@@ -29,7 +29,7 @@ export default function TemplatesList() {
           </Link>
           <h1>Mis plantillas</h1>
         </div>
-        <button className="btn-ghost" onClick={() => navigate('/plantillas/nueva')}>
+        <button className="btn-ghost" onClick={() => navigate('/plantillas/asistente')}>
           + Nueva
         </button>
       </header>
@@ -40,7 +40,7 @@ export default function TemplatesList() {
         ) : templates.length === 0 ? (
           <div className="empty">
             <p>Aún no tienes plantillas.</p>
-            <Link to="/plantillas/nueva" className="btn btn-sm">
+            <Link to="/plantillas/asistente" className="btn btn-sm">
               Crear plantilla
             </Link>
           </div>
